@@ -403,18 +403,19 @@ function App() {
           </Paragraph>
         </div>
 
-        <Space direction="vertical" align="end">
-          <div style={{ textAlign: 'right' }}>
-            <div style={{ marginBottom: 8 }}>
-              <Text type="secondary">Tổng tiền hiện có</Text>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, justifyContent: 'flex-end' }}>
-              <Title level={3} style={{ margin: 0 }}>
-                {formatMoney(totalMoney)}
-              </Title>
-              <div>
+        <div className="hero-right">
+          <div className="hero-total" style={{ textAlign: 'right' }}>
+            <div style={{ display: 'flex', gap: 24, alignItems: 'flex-end', justifyContent: 'flex-end' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 140 }}>
+                <Text type="secondary">Tổng tiền hiện có</Text>
+                <Title level={3} style={{ margin: '6px 0 0' }}>
+                  {formatMoney(totalMoney)}
+                </Title>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 120 }}>
                 <Text type="secondary">Chưa phân bổ</Text>
-                <div>
+                <div style={{ marginTop: 6 }}>
                   <Text className={totalMoney - totals.initial < 0 ? 'negative-money' : 'positive-money'} strong>
                     {formatMoney(Number(totalMoney || 0) - Number(totals.initial || 0))}
                   </Text>
@@ -423,20 +424,22 @@ function App() {
             </div>
           </div>
 
-          <Space>
-            <Button icon={<DownloadOutlined />} onClick={handleExport}>
-              Xuất JSON
-            </Button>
-            <Button icon={<UploadOutlined />} onClick={() => document.getElementById('import-json').click()}>
-              Nhập JSON
-            </Button>
-            <input id="import-json" type="file" accept="application/json" hidden onChange={handleImport} />
-            <Button onClick={() => { totalForm.setFieldsValue({ total: Number(totalMoney || 0) }); setTotalModalOpen(true); }}>Thiết lập tổng tiền</Button>
-            <Button type="primary" icon={<PlusOutlined />} onClick={openCreateFundModal}>
-              Tạo quỹ
-            </Button>
-          </Space>
-        </Space>
+          <div style={{ marginTop: 12 }}>
+            <Space className="hero-actions" direction="vertical" align="end">
+              <Button icon={<DownloadOutlined />} onClick={handleExport}>
+                Xuất JSON
+              </Button>
+              <Button icon={<UploadOutlined />} onClick={() => document.getElementById('import-json').click()}>
+                Nhập JSON
+              </Button>
+              <input id="import-json" type="file" accept="application/json" hidden onChange={handleImport} />
+              <Button onClick={() => { totalForm.setFieldsValue({ total: Number(totalMoney || 0) }); setTotalModalOpen(true); }}>Thiết lập tổng tiền</Button>
+              <Button type="primary" icon={<PlusOutlined />} onClick={openCreateFundModal}>
+                Tạo quỹ
+              </Button>
+            </Space>
+          </div>
+        </div>
       </section>
 
       <Row gutter={[16, 16]} className="summary-grid">
@@ -625,6 +628,7 @@ function App() {
 
           <Form.Item label="Màu nhận diện" name="color" rules={[{ required: true }]}> 
             <Segmented
+              className="color-segmented"
               options={FUND_COLORS.map((color) => ({
                 label: <span className="color-dot" style={{ backgroundColor: color }} />,
                 value: color,

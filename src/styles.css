@@ -20,7 +20,7 @@ body {
 
 .hero-card {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 24px;
   margin-bottom: 18px;
@@ -123,6 +123,7 @@ body {
   min-height: 42px;
   overflow: hidden;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
@@ -145,6 +146,39 @@ body {
   border-radius: 999px;
   vertical-align: middle;
   box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.72);
+}
+
+/* Make segmented color choices scrollable on small screens and smaller dots */
+.color-segmented {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  padding-bottom: 4px;
+  white-space: nowrap;
+}
+
+.color-segmented .ant-segmented-item {
+  flex: 0 0 auto;
+  min-width: 44px;
+  padding: 6px 8px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 420px) {
+  .color-dot {
+    width: 16px;
+    height: 16px;
+  }
+
+  .color-segmented .ant-segmented-item {
+    min-width: 38px;
+    padding: 4px 6px;
+  }
 }
 
 .positive-money {
@@ -173,9 +207,22 @@ body {
   }
 
   .hero-card {
-    align-items: stretch;
-    flex-direction: column;
+  align-items: stretch;
+  flex-direction: column;
     padding: 24px;
+  }
+
+  /* Make hero content flow better on narrow tablets */
+  .hero-card > div {
+    width: 100%;
+  }
+
+  /* Ensure action group wraps and aligns correctly (target only .hero-actions) */
+  .hero-actions {
+    width: 100%;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
   .toolbar-card {
@@ -187,18 +234,79 @@ body {
   }
 }
 
+/* Layout helpers for hero right area */
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.hero-total {
+  min-width: 220px;
+}
+
+@media (min-width: 901px) {
+  /* Ensure hero content left and right are balanced */
+  .hero-card {
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .hero-right {
+    align-items: flex-end;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-right {
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .hero-total {
+    text-align: left !important;
+  }
+
+  .hero-actions {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .hero-actions .ant-btn {
+    width: auto;
+  }
+}
+
 @media (max-width: 575px) {
   .app-shell {
     padding: 12px;
   }
 
   .hero-card {
-    padding: 20px;
-    border-radius: 22px;
+    padding: 16px;
+    border-radius: 18px;
+    gap: 12px;
   }
 
   .hero-card h1.ant-typography {
     font-size: 34px;
+  }
+
+  /* Stack hero buttons and make them touch-friendly (target only .hero-actions) */
+  .hero-actions {
+    display: flex;
+    width: 100%;
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .hero-actions .ant-btn {
+    width: 100%;
   }
 
   .summary-card,
@@ -210,5 +318,53 @@ body {
 
   .ant-drawer-content-wrapper {
     width: 100% !important;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 420px) {
+  .hero-card {
+    padding: 12px;
+  }
+
+  .hero-card h1.ant-typography {
+    font-size: 28px;
+  }
+
+  /* Hide long description on very small screens to save vertical space */
+  .hero-description {
+    display: none;
+  }
+
+  /* Smaller fund cards and avatars for tiny screens */
+  .fund-card {
+    min-height: 220px;
+  }
+
+  .fund-avatar .ant-avatar,
+  .fund-avatar {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .fund-description {
+    min-height: 32px;
+  }
+}
+
+/* General adjustments for medium-small screens */
+@media (max-width: 768px) {
+  .fund-card {
+    min-height: 260px;
+  }
+
+  .fund-avatar .ant-avatar,
+  .fund-avatar {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .fund-description {
+    min-height: 36px;
   }
 }
